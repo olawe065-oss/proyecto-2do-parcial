@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Papelería Los Insanitos</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <header>
+    <h1>LOS INSANITOS</h1>
+    <p>Proyecto</p>
+  </header>
+
+  <main>
+    <h2>Productos</h2>
+    <form id="formulario">
+      <table class="tabla-productos">
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>seleccione</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><img src="cuaderno_74190-2725.jpg" width="150" height="140" alt="Cuaderno"></td>
+            <td>Cuaderno</td>
+            <td>$15</td>
+            <td><button type="button" onclick="agregarAlCarrito('Cuaderno', 15)">Agregar al carrito</button></td>
+          </tr>
+          <tr>
+            <td><img src="PRECISION-BOLIGRAFO-07-1200X1200-1-1024x1024.jpg" width="130" height="160" alt="Pluma"></td>
+            <td>Pluma</td>
+            <td>$10</td>
+            <td><button type="button" onclick="agregarAlCarrito('Pluma', 10)">Agregar al carrito</button></td>
+          </tr>
+          <tr>
+            <td><img src="ESCO2-0002.jpg" width="120" height="120" alt="Goma"></td>
+            <td>Goma</td>
+            <td>$5</td>
+            <td><button type="button" onclick="agregarAlCarrito('Goma', 5)">Agregar al carrito</button></td>
+          </tr>
+          <tr>
+            <td><img src="mochila-costa-clio-style-free-fire-fr2497j-1.jpg" width="120" height="130" alt="Mochila"></td>
+            <td>Mochila</td>
+            <td>$20</td>
+            <td><button type="button" onclick="agregarAlCarrito('Mochila', 20)">Agregar al carrito</button></td>
+          </tr>
+          <tr>
+            <td><img src="6891.jpeg" width="140" height="145" alt="Hojas"></td>
+            <td>Hojas</td>
+            <td>$8</td>
+            <td><button type="button" onclick="agregarAlCarrito('Hojas', 8)">Agregar al carrito</button></td>
+          </tr>
+          <tr>
+            <td><img src="cartulina-blanca-22-27.jpg" width="120" height="120" alt="Cartulina"></td>
+            <td>Cartulina</td>
+            <td>$12</td>
+            <td><button type="button" onclick="agregarAlCarrito('Cartulina', 12)">Agregar al carrito</button></td>
+          </tr>
+          <tr>
+            <td><img src="7501199426457-1.jpg" width="120" height="150" alt="Pegamento"></td>
+            <td>Pegamento</td>
+            <td>$6</td>
+            <td><button type="button" onclick="agregarAlCarrito('Pegamento', 6)">Agregar al carrito</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+
+    <div id="carrito" style="margin-top: 2em;">
+      <h3>Carrito</h3>
+      <table id="tablaCarrito" class="tabla-productos">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+
+      <button type="button" onclick="pagar()">Pagar</button>
+      <p id="corte">Corte del día: $0</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>© creado por: Macias Lucio Emir, Moreno Esquivel Donovan, López Flores Paola, Moreno Ángel Santiago</p>
+  </footer>
+
+  <script>
+    let carrito = [];
+    let corteDelDia = 0;
+
+    function agregarAlCarrito(nombre, precio) {
+      carrito.push({ nombre, precio });
+      actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+      const tabla = document.querySelector("#tablaCarrito tbody");
+      tabla.innerHTML = "";
+
+      carrito.forEach(item => {
+        const fila = document.createElement("tr");
+        fila.innerHTML = `<td>${item.nombre}</td><td>$${item.precio}</td>`;
+        tabla.appendChild(fila);
+      });
+    }
+
+    function pagar() {
+      const total = carrito.reduce((acc, item) => acc + item.precio, 0);
+      corteDelDia += total;
+
+      const filaTotal = document.createElement("tr");
+      filaTotal.innerHTML = `<td><strong>Total a pagar</strong></td><td><strong>$${total}</strong></td>`;
+      document.querySelector("#tablaCarrito tbody").appendChild(filaTotal);
+
+      document.getElementById("corte").textContent = "Corte del día: $" + corteDelDia;
+      carrito = [];
+    }
+  </script>
+</body>
+</html>
